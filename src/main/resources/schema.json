@@ -1,0 +1,9 @@
+{
+  "type":"struct",
+  "name":"logs",
+  "fields": [
+    {"name":"uid","type":"string"},
+    {"name":"thread","type":"string"},
+    {"name":"level","type":"string"}
+  ]
+}
