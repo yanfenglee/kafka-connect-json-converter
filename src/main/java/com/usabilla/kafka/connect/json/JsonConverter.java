@@ -10,7 +10,6 @@ import org.apache.kafka.connect.data.Field;
 import org.apache.kafka.connect.data.Schema;
 import org.apache.kafka.connect.data.SchemaAndValue;
 import org.apache.kafka.connect.errors.DataException;
-import org.apache.kafka.connect.json.JsonConverterBase;
 import org.apache.kafka.connect.json.JsonConverterConfig;
 import org.apache.kafka.connect.json.JsonSchema;
 
@@ -24,7 +23,7 @@ import java.util.Map;
  * For the official support status please check https://issues.apache.org/jira/browse/KAFKA-3832
  * This Package should be deprecated as soon as Kafka supports this feature
  */
-public class JsonConverter extends JsonConverterBase {
+public class JsonConverter extends com.usabilla.kafka.connect.json.JsonConverterBase {
     private final static ObjectMapper mapper = new ObjectMapper();
 
     private static JsonNode schema;
@@ -47,6 +46,10 @@ public class JsonConverter extends JsonConverterBase {
 
     @Override
     public SchemaAndValue toConnectData(String topic, byte[] value) {
+        System.out.println("==============================================222json is:");
+        if (value == null) System.out.println("null byte message");
+        System.out.println("topic is: " + topic);
+
         JsonNode jsonValue;
         try {
             jsonValue = deserializer.deserialize(topic, value);
@@ -55,6 +58,8 @@ public class JsonConverter extends JsonConverterBase {
         }
 
         System.out.println("==============================================json is:");
+        if (value == null) System.out.println("null byte message");
+        System.out.println("byte msg: " + new String(value));
         System.out.println(jsonValue.toString());
         System.out.println("==============================================end");
 

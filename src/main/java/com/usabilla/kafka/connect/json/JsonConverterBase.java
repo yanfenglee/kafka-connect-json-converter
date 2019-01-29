@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.kafka.connect.json;
+package com.usabilla.kafka.connect.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -36,6 +36,10 @@ import org.apache.kafka.connect.data.Time;
 import org.apache.kafka.connect.data.Decimal;
 import org.apache.kafka.connect.data.Date;
 import org.apache.kafka.connect.errors.DataException;
+import org.apache.kafka.connect.json.JsonConverterConfig;
+import org.apache.kafka.connect.json.JsonDeserializer;
+import org.apache.kafka.connect.json.JsonSchema;
+import org.apache.kafka.connect.json.JsonSerializer;
 import org.apache.kafka.connect.storage.Converter;
 import org.apache.kafka.connect.storage.ConverterType;
 import org.apache.kafka.connect.storage.HeaderConverter;
@@ -272,7 +276,7 @@ public class JsonConverterBase implements Converter, HeaderConverter {
     private Cache<JsonNode, Schema> toConnectSchemaCache;
 
     private final JsonSerializer serializer = new JsonSerializer();
-    public final JsonDeserializer deserializer = new JsonDeserializer();
+    private final JsonDeserializer deserializer = new JsonDeserializer();
 
     @Override
     public ConfigDef config() {
@@ -350,7 +354,7 @@ public class JsonConverterBase implements Converter, HeaderConverter {
         return jsonToConnect(jsonValue);
     }
 
-    public SchemaAndValue jsonToConnect(JsonNode jsonValue) {
+    private SchemaAndValue jsonToConnect(JsonNode jsonValue) {
         if (jsonValue == null)
             return SchemaAndValue.NULL;
 
